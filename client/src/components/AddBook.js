@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {graphql,compose} from 'react-apollo'
 import {getAuthorsQuery, getBooksQuery, addBookMutation} from '../queries/queries';
-
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 class AddBook extends Component {
     constructor(props){
         super(props);
@@ -12,7 +12,6 @@ class AddBook extends Component {
             authorId:''
         }
     }
-
     displayAuthor = () => {
         let data = this.props.getAuthorsQuery;
         if(data.loading){
@@ -45,26 +44,24 @@ class AddBook extends Component {
 
     render = () => {
         return (
-        <div>
-            <form id="add-book" onSubmit={this.submitForm.bind(this)}>
-                <div className="field">
-                    <label>Book name:</label>
-                    <input type="text" onChange={(e)=>this.setState({name:e.target.value})}/>
-                </div>
-                <div className="field">
-                    <label>Genre:</label>
-                    <input type="text"onChange={(e)=>this.setState({genre:e.target.value})}/>
-                </div>
-                <div className="field">
-                    <label>Author:</label>
-                    <select onChange={(e)=>this.setState({authorId:e.target.value})}>
-                        <option disabled>--select Author--</option>
-                        {this.displayAuthor()}
-                    </select>
-                </div>
-                <button>+</button>
-            </form>
-        </div>
+            <Form>
+            <FormGroup>
+            <Label for="bookName">Book Name</Label>
+            <Input type="input" name="bookName" id="bookName" placeholder="Insert book name here!" />
+            </FormGroup>
+            <FormGroup>
+            <Label for="bookGenre">Password</Label>
+            <Input type="input" name="bookGenre" id="bookGenre" placeholder="Insert book genre here!" />
+            </FormGroup>
+            <FormGroup>
+            <Label for="authors">Select</Label>
+            <Input type="select" name="authors" id="authors">
+                <option disabled>--select Author--</option>
+                {this.displayAuthor()}
+            </Input>
+            </FormGroup>
+            <Button color="primary" size="lg" block>Add</Button>
+        </Form>                
         );
     }
 }

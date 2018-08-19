@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { getBooksQuery } from '../queries/queries';
-
 // components
-import BookDetails from './BookDetails';
+import Book from './Book';
 
 class BookList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            selected: null
+            selected: null,
+            colapse: false
         }
     }
+      
     displayBooks(){
         var data = this.props.data;
+        
         if(data.loading){
             return( <div>Loading books...</div> );
         } else {
             return data.books.map(book => {
-                return(
-                    <li key={ book.id } onClick={ (e) => this.setState({ selected: book.id }) }>{ book.name }</li>
+                return (
+                    <Book key={book.id} bookId={book.id}></Book>
                 );
             })
         }
     }
     render(){
         return(
-            <div>
-                <ul id="book-list">
-                    { this.displayBooks() }
-                </ul>
-                <BookDetails bookId={ this.state.selected } />
-            </div>
+            <ul id="book-list">
+                { this.displayBooks() }
+            </ul>
         );
     }
 }
